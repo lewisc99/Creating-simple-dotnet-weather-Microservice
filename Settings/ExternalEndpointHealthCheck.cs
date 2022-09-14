@@ -20,12 +20,20 @@ namespace HelloDot.Settings
         {
             settings = options.Value;
         }
-        public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+        public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
 
 
             Ping ping = new(); //same as new Ping();
-            var reply
+            var reply = await ping.SendPingAsync(settings.OpenWeatherHost);
+
+            if (reply.Status != IPStatus.Success) //if it was a healthy result.
+            {
+                return HealthCheckResult.Unhealthy();
+            }
+
+
+            return HealthCheckResult.Healthy();
 
 
 

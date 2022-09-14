@@ -18,6 +18,11 @@ namespace HelloDotnet
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging((context,logging) =>
+                {
+                    logging.ClearProviders();
+                    logging.AddJsonConsole();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -1,5 +1,6 @@
 using HelloDot.Clients;
 using HelloDot.models;
+using HelloDot.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -49,7 +50,7 @@ namespace HelloDotnet
                 .AddTransientHttpErrorPolicy(builder => builder.CircuitBreakerAsync(3, TimeSpan.FromSeconds(10)));
 
 
-            services.AddHealthChecks();
+            services.AddHealthChecks().AddCheck<ExternalEndpointHealthCheck>("OpenWeather");
 
         }
 
